@@ -2,7 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose'; 
 import multer from 'multer'; 
 import path from 'path'; 
- 
+
+const express = require('express'); 
+const path = require('path'); 
 const app = express(); 
 const PORT = 3000; 
  
@@ -63,3 +65,15 @@ app.listen(PORT, () => {
     console.log(`Serveur: http://localhost:${PORT}`); 
     console.log(`Mongo Express: http://localhost:8081`); 
 }); 
+
+// Servir les images statiquement 
+app.use('/images', express.static(path.join(__dirname, 'uploads'))); 
+
+// Endpoint alternatif avec contrôle 
+app.get('/images/:nom', (req, res) => { 
+const imagePath = path.join(__dirname, 'uploads', req.params.nom); 
+res.sendFile(imagePath, (err) => { 
+if (err) res.status(404).send('Image non trouvée'); 
+}); 
+}); 
+app.listen(3000, () => console.log('🖼️  Serveur images: http://localhost:3000')); 
