@@ -1,0 +1,35 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Ajouter Produit</title> 
+</head> 
+<body> 
+    <form id="productForm"> 
+        <input type="text" name="id" placeholder="ID" required> 
+        <input type="text" name="nom" placeholder="Nom" required> 
+        <input type="number" name="prix" placeholder="Prix" step="0.01" required> 
+        <input type="file" name="image" accept="image/*" required> 
+        <button type="submit">Ajouter</button> 
+    </form> 
+ 
+    <div id="message"></div> 
+ 
+    <script> 
+        document.getElementById('productForm').addEventListener('submit', async (e
+ ) => { 
+            e.preventDefault(); 
+             
+            const formData = new FormData(e.target); 
+             
+            const response = await fetch('http://localhost:3000/api/products', { 
+                method: 'POST', 
+                body: formData 
+            }); 
+             
+            const result = await response.json(); 
+            document.getElementById('message').textContent =  
+                response.ok ? 'Produit ajouté!' : 'Erreur: ' + result.error; 
+        }); 
+    </script> 
+</body> 
+</html>
