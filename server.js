@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import multer from 'multer'; 
 import path from 'path'; 
 
-const express = require('express'); 
-const path = require('path'); 
 const app = express(); 
 const PORT = 3000; 
  
@@ -67,7 +65,7 @@ app.listen(PORT, () => {
 }); 
 
 // Servir les images statiquement 
-app.use('/images', express.static(path.join(__dirname, 'uploads'))); 
+app.use('/images', express.static('uploads')); 
 
 // Endpoint alternatif avec contrôle 
 app.get('/images/:nom', (req, res) => { 
